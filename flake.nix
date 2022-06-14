@@ -19,9 +19,10 @@
         overlays = [ (import ./haskell-overlay.nix) ];
         pkgs = import nixpkgs { inherit config overlays system; };
       in rec {
-        defaultPackage = packages.website;
-
-        packages = with pkgs.myHaskellPackages; { inherit ssg website; };
+        packages = with pkgs.myHaskellPackages; {
+          inherit ssg website;
+          default = website;
+        };
 
         apps.default = flake-utils.lib.mkApp {
           drv = packages.ssg;
